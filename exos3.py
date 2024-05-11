@@ -1,31 +1,33 @@
-class Solution:
+import heapq
 
+def kLargest(arr, N, k):
+    # Initialize a min heap
+    heap = []
 
-    def topK(self, nums, k):
-        # Step 1: Count the frequency of each element
-        freq_map = {}
-        for num in nums:
-            freq_map[num] = freq_map.get(num, 0) + 1
+    # Push first k elements into the heap
+    for i in range(k):
+        heapq.heappush(heap, arr[i])
 
+    # Iterate over the remaining elements in the array
+    for i in range(k, N):
+        # If the current element is larger than the smallest element in the heap
+        if arr[i] > heap[0]:
+            # Pop the smallest element from the heap
+            heapq.heappop(heap)
+            # Push the current element into the heap
+            heapq.heappush(heap, arr[i])
 
-        # Step 2: Convert the dictionary into a list of tuples
-        freq_list = [(key, value) for key, value in freq_map.items()]
+    # The k largest elements will be present in the heap
+    # Return them in descending order
+    return sorted(heap, reverse=True)
 
-        # Step 3: Sort the list based on frequency and the element itself
-        freq_list.sort(key=lambda x: (x[1], -x[0]))
-        print(freq_list)
+# Example usage:
+arr1 = [12, 5, 787, 1, 23]
+N1 = 5
+k1 = 2
+print(kLargest(arr1, N1, k1))  # Output: [787, 23]
 
-        # Step 4: Extract the top k elements
-        result = [freq_list[i][0] for i in range(k)]
-
-        return result
-
-
-if __name__ == '__main__':
-        obj = Solution()
-        ans = obj.topK([6 ,1, 1, 1, 2, 2, 3], 2)
-        for i in ans:
-            print(i, end=" ")
-        print()
-
-# } Driver Code Ends
+arr2 = [1, 23, 12, 9, 30, 2, 50]
+N2 = 7
+k2 = 3
+print(kLargest(arr2, N2, k2))  # Output: [50, 30, 23]
