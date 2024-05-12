@@ -8,10 +8,10 @@ class Node:
         self.next = None
 '''
 
-class ListNode:
-    def __init__(self, data=0, next=None):
-        self.data = data
-        self.next = next
+class LinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
 
 class Solution:
     # Function to perform insertion sort on the linked list.
@@ -19,7 +19,7 @@ class Solution:
         if not head or not head.next:
             return head
 
-        dummy = ListNode()  # Dummy node to handle the case where head needs to be updated
+        dummy = LinkedList()  # Dummy node to handle the case where head needs to be updated
         dummy.next = head
         curr = head  # Pointer to traverse the list
 
