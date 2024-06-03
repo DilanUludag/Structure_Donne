@@ -9,9 +9,11 @@ class Solution:
         # j'initialise un min-heap c'est un tableau qui va mettre les chiffres les plus bas près de la racine.
         min_heap = []
 
-        # j'insere les k premiers éléments dans le min-heap
+        # j'insere les k+1 premiers éléments dans le min-heap
+
         for i in range(min(k + 1, n)): # on prends les k+1 elements pour etre sur que ca va jamais depasser
             heapq.heappush(min_heap, arr[i])
+
 
         # Pour chaque élément restant dans le tableau
         for i in range(k + 1, n):
@@ -20,11 +22,14 @@ class Solution:
             # On ajoute le prochain élément du tableau dans le tas
             heapq.heappush(min_heap, arr[i])
 
+
         # On ajoute les éléments restants du tas et les ajouter au tableau trié
         while min_heap:
             sorted_arr.append(heapq.heappop(min_heap))
 
         return sorted_arr
+    
+
 
 # application d'utilisation
 obj = Solution()

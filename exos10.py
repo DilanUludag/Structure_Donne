@@ -18,6 +18,8 @@ class Solution:
 
         # ajoute l'élément dans la pile via la fonction qui remets dans l'ordre, il y a 1 element dans la pile toujours
         self.insert_sorted(s, top_element)
+
+
     
     def insert_sorted(self, stack, element):
         # Si c'est vide ou bien si l'element à ajouter est plus grand que le dernier de la pile alors l'ajouter a la pile
@@ -30,7 +32,7 @@ class Solution:
             top_element = stack.pop()
             
             # on re appelle jusque quand il reste 1 ou que l'element est plus grand que le dernier
-            self.insert_sorted(stack, element)
+            self.s(stack, element)
             
             # on re-ajoute à la pile ce qu'on avait enelevé
             stack.append(top_element)

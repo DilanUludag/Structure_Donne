@@ -36,8 +36,6 @@ class Solution:
                 prev.next = temp
 
 
-
-
             else: #ca veut dire que curr est bien placé donc on avance dans la liste
                 curr = curr.next
 
