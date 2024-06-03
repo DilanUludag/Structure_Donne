@@ -3,32 +3,36 @@ class Solution:
     # function sort the stack such that top element is max
     # funciton should return nothing
     # s is a stack
+
+
     def Sorted(self, s):
-        # Base case: If stack is empty or has only one element, it is already sorted
+        # Si il y a que 1 element ou aucun alors on renvoie
         if len(s) <= 1:
             return
         
-        # Remove the top element
+        # enleve le top element
         top_element = s.pop()
         
-        # Recursively sort the remaining stack
+        # on re-appel la fonction jusque quand il restera 1 element
         self.Sorted(s)
-        
-        # Insert the popped element back in the sorted stack
+
+        # ajoute l'élément dans la pile via la fonction qui remets dans l'ordre, il y a 1 element dans la pile toujours
         self.insert_sorted(s, top_element)
     
     def insert_sorted(self, stack, element):
-        # If the stack is empty or the element is greater than the top element, push the element
+        # Si c'est vide ou bien si l'element à ajouter est plus grand que le dernier de la pile alors l'ajouter a la pile
         if not stack or element > stack[-1]:
             stack.append(element)
-        else:
-            # Remove the top element
+
+        else: #si c'est plus petit que le dernier element
+
+            # On enleve le top
             top_element = stack.pop()
             
-            # Recursively call insert_sorted to place the element
+            # on re appelle jusque quand il reste 1 ou que l'element est plus grand que le dernier
             self.insert_sorted(stack, element)
             
-            # Put back the top element
+            # on re-ajoute à la pile ce qu'on avait enelevé
             stack.append(top_element)
 
 # Driver Code Starts

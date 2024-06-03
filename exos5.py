@@ -8,41 +8,43 @@ class Node:
         self.next = None
 '''
 
-class LinkedList:
-    def __init__(self):
-        self.head = None
-        self.tail = None
-
 class Solution:
-    # Function to perform insertion sort on the linked list.
+
     def insertionSort(self, head):
+        #si ya pas de queue ou si on est a la fin
         if not head or not head.next:
             return head
 
-        dummy = LinkedList()  # Dummy node to handle the case where head needs to be updated
-        dummy.next = head
-        curr = head  # Pointer to traverse the list
+        dummy = Node(0)  # Création d'un nœud fictif pour faciliter les insertions
+        dummy.next = head #on a donc 0 --> Head --> ...
 
-        while curr and curr.next:
-            # If the current node's value is greater than the next node's value, we need to insert it
-            if curr.data > curr.next.data:
-                # Initialize prev to the beginning of the list
-                prev = dummy
-                # Find the correct position to insert the current node
-                while prev.next.data < curr.next.data:
-                    prev = prev.next
-                # Store the next node of the current node
-                temp = curr.next
-                # Update the next pointer of the current node to skip the next node
-                curr.next = curr.next.next
-                # Insert the current node after prev
+        curr = head  # Pointeur pour traverser la liste
+
+        while curr and curr.next: # tant qu'on est pas à la fin de la liste
+            if curr.data > curr.next.data: #si la valeur actuel est plus grande que la valeure suivant alors ca veut dire qu'on doit le faire avancer dans la liste
+                prev = dummy  #prev initialisé au début de la liste (0)
+
+                while prev.next.data < curr.next.data: # tant que la valeur suivante est plus petite que la valeur de curr.next
+                    prev = prev.next # ca veut dire on est pas au bon emplacement pour le placer donc on avance le prev
+
+
+                #insertion de la donnée
+                temp = curr.next #selectionne la donnée qu'on veut replacer
+                curr.next = curr.next.next #on coupe cette donné
+                #on regroupe la file
                 temp.next = prev.next
                 prev.next = temp
-            else:
-                # If the current node is in order, move to the next node
+
+
+
+
+            else: #ca veut dire que curr est bien placé donc on avance dans la liste
                 curr = curr.next
 
-        return dummy.next
+        return dummy.next #.next car la liste commence par le noeud 0
+
+
+
 
 #{ 
  # Driver Code Starts

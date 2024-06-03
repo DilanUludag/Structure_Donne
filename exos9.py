@@ -1,13 +1,13 @@
 class Solution:
     def reverse(self, stack):
-        # Create a copy of the original stack
+        # Créé une copie de la pile
         aux_stack = stack[:]
 
-        # Transfer all elements from the original stack to the auxiliary stack
+        # nettoyer le stack
         while stack:
             delete = stack.pop()
 
-        # Transfer all elements from the auxiliary stack back to the original stack
+        # ajouter a stack le auxiliere, ca sera dans l'ordre inverse ducoup
         while aux_stack:
             stack.append(aux_stack.pop())
 

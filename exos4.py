@@ -10,12 +10,18 @@
             self.data = data
             self.next = None
 '''
+
+
 class Solution:
-    # Function to merge two sorted linked lists.
+
+
+    # fonction pour fusionner deux chaines listés
     def merge(self, left, right):
         dummy = LinkedList()
         curr = dummy
-        
+
+
+        #tant que ya une file de gauche et droite
         while left and right:
             if left.data < right.data:
                 curr.next = left
@@ -28,35 +34,55 @@ class Solution:
         curr.next = left or right
         return dummy.next
 
-    # Function to split the linked list into two halves.
+
+
+    # Fonction pour split en deux parties
     def split(self, head):
+        #on retourne le head si c'est vide ou si on est a la fin on retourne la tete
         if not head or not head.next:
             return head
 
+        # on prend un premier noeud
         slow = head
+
+        # on prend le noeud suivant
         fast = head.next
 
+        # tant que FAST et le noeuds d'apres n'est pas vide
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
 
+
+        # ca ressort d'office la moitié
         mid = slow.next
-        slow.next = None
+        slow.next = None #sert a stoper la liste pour séparer vraiment la liste en 2
 
-
+        #retourne le millieu
         return mid
 
-    # Function to perform merge sort on the linked list.
+
+
+
+    # fonction principal pour faire le merge sort
     def mergeSort(self, head):
+        # si c'est la fin de la liste ou si il n'y a pas de head alors on retourne le head qu'on a recu
         if not head or not head.next:
             return head
 
+        # on fait appel à la fonction self.split qui retourne le noeud qui sépare en deux la liste
         mid = self.split(head)
 
+
+        # on separe la liste de gauche en deux encore
         left = self.mergeSort(head)
+
+        # on separe la liste de droite encore a deux
         right = self.mergeSort(mid)
 
+        # on retourne le resultat de la fusion droite et gauche qui sera une chaine listée
         return self.merge(left, right)
+
 
 #{ 
  # Driver Code Starts

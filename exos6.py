@@ -9,61 +9,64 @@ class Node:
 '''
 
 class Solution:
-    # Function to merge two sorted doubly linked lists.
-    def merge(self, left, right, order):
-        if not left:
-            return right
-        if not right:
-            return left
 
-        if order == "asc":
-            if left.data <= right.data:
-                left.next = self.merge(left.next, right, order)
-                left.next.prev = left
-                left.prev = None
-                return left
-            else:
-                right.next = self.merge(left, right.next, order)
-                right.next.prev = right
-                right.prev = None
-                return right
-        else:
-            if left.data >= right.data:
-                left.next = self.merge(left.next, right, order)
-                left.next.prev = left
-                left.prev = None
-                return left
-            else:
-                right.next = self.merge(left, right.next, order)
-                right.next.prev = right
-                right.prev = None
-                return right
-
-    # Function to split the doubly linked list into two halves.
-    def split(self, head):
-        slow = head
-        fast = head
-
-        while fast.next and fast.next.next:
-            slow = slow.next
-            fast = fast.next.next
-
-        middle = slow.next
-        slow.next = None
-        middle.prev = None
-
-        return head, middle
-
-    # Function to perform Merge Sort on doubly linked list.
-    def sortDoubly(self, head, order="asc"):
+    # Fonction principale
+    def sortDoubly(self, head):
         if not head or not head.next:
             return head
 
-        left, right = self.split(head)
-        left = self.sortDoubly(left, order)
-        right = self.sortDoubly(right, order)
+        # sépare la liste en 2
+        mid = self.split(head)
 
-        return self.merge(left, right, order)
+        # On le fait pour chaque moitié
+        left = self.sortDoubly(head)
+        right = self.sortDoubly(mid)
+
+        # on fusionne les deux bouts
+        return self.merge(left, right)
+
+    # fonction qui sépare en deux bouts
+    def split(self, head):
+        fast = slow = head
+
+        # pour trouver le milieu
+        while fast.next and fast.next.next:
+            fast = fast.next.next
+            slow = slow.next
+
+        #quand on est sorti de la boucle on a trouvé le milieu
+
+        second = slow.next
+        slow.next = None # pour couper le liste chainée
+        if second:
+            second.prev = None # pour couper egalement
+
+        return second # on retourne la moitié
+
+    # Pour fusionner
+
+    def merge(self, first, second):
+        if not first:
+            return second
+        if not second:
+            return first
+
+        # si a gauche est plus petit que a droite
+        if first.data < second.data:
+            first.next = self.merge(first.next, second)
+            first.next.prev = first
+            first.prev = None
+            return first
+
+        # si a droite est plus petit que a gauche
+        else:
+            second.next = self.merge(first, second.next)
+            second.next.prev = second
+            second.prev = None
+            return second
+
+
+
 
 #{ 
  # Driver Code Starts

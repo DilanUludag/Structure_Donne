@@ -8,40 +8,54 @@
 class Twitter:
 
     def __init__(self):
-        self.tweets = {}  # userId -> list of (timestamp, tweetId)
-        self.follows = {}  # userId -> set of followeeIds
-        self.time = 0      # global timestamp to keep tweets in order
+        self.tweets = {}  # clef = userId , donnée =  list de (timestamp, tweetId) (dictionnaire)
+        self.follows = {}  # clef = userId, donnée =  followeeIds  (dictionnaire)
+        self.time = 0      # compteur global pour l'ordre des tweets
 
-    def postTweet(self, userId: int, tweetId: int):
-        if userId not in self.tweets:
-            self.tweets[userId] = []
-        self.tweets[userId].append((self.time, tweetId))
-        self.time += 1
+    def postTweet(self, userId, tweetId): #permets de poster un tweet
 
-    def getNewsFeed(self, userId: int):
+        if userId not in self.tweets: # si l'utilisateur n'a jamais fait de tweet
+            self.tweets[userId] = [] # on ajoute la clef au dictionnaire avec aucune donnée
+
+        self.tweets[userId].append((self.time, tweetId)) # ajoute la donnée à la clef associé à son nom
+        self.time += 1 # augmente le timestamp
+
+    def getNewsFeed(self, userId ): # renvoie les 10 tweets les plus récents
         result = []
-        # Get user's tweets
+        # On cherche les tweet de lui même
         if userId in self.tweets:
             result.extend(self.tweets[userId])
-        # Get tweets from followees
+
+
+        # On prends les tweets de ses folowers
         if userId in self.follows:
+            # pour tout ses abonnements
             for followeeId in self.follows[userId]:
+                # si ses abonnements ont tweet quelques chose
                 if followeeId in self.tweets:
+                    # ajout au result
                     result.extend(self.tweets[followeeId])
-        # Sort tweets by timestamp and get the 10 most recent
+
+        # trie par time
         result.sort(reverse=True, key=lambda x: x[0])
+
+        # prends les 10 premiers
         return [tweetId for _, tweetId in result[:10]]
 
-    def follow(self, followerId: int, followeeId: int):
-        if followerId == followeeId:
-            return
-        if followerId not in self.follows:
-            self.follows[followerId] = set()
-        self.follows[followerId].add(followeeId)
 
-    def unfollow(self, followerId: int, followeeId: int):
+
+    def follow(self, followerId , followeeId ):
+        if followerId == followeeId: # si on veut s'abonner a soi meme
+            return
+
+        if followerId not in self.follows: #si il est abonné a personne
+            self.follows[followerId] = set()  #ajoute au dictionnaire sans donnée
+
+        self.follows[followerId].add(followeeId) # ajoute l'abonnement
+
+    def unfollow(self, followerId, followeeId):
         if followerId in self.follows and followeeId in self.follows[followerId]:
-            self.follows[followerId].remove(followeeId)
+            self.follows[followerId].remove(followeeId) # on supprime
 
 #{ 
  # Driver Code Starts.
